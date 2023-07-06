@@ -10,17 +10,14 @@ import { Home } from './pages/home';
 export const appContext= createContext();
 function App() {
   const user= useAuthState(auth);
-  useEffect(()=>{},[user]);
   return (
     <div className="flex text-center h-screen">
-      <appContext.Provider user={user}>
-        <Router>
-          <Navbar/> 
-          <Routes>
-            <Route path='/' element={auth?<Home/>:<Login/>}/>
-          </Routes>
-        </Router>
-      </appContext.Provider>
+      <Router>
+        <Navbar/> 
+        <Routes>
+          <Route path='/' element={auth?<Home/>:<Login/>}/>
+        </Routes>
+      </Router>
     </div>
   );
 }
