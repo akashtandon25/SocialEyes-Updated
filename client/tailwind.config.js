@@ -3,7 +3,11 @@ export const content = [
   "./src/**/*.{js,jsx,ts,tsx}",
 ];
 export const theme = {
-  extend: {},
+  extend: {
+    'flex':{
+      '5': '5 5 0%',
+    }
+  },
 };
 export const plugins = [];
 
