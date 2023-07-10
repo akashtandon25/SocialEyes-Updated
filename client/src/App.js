@@ -28,3 +28,5 @@ function App() {
 }
 
 export default App;
+
+// handle image deletinon from firebase when deleted from firestore.
