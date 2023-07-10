@@ -11,15 +11,18 @@ import { Post } from './pages/post/post';
 export const appContext= createContext();
 function App() {
   const [user]= useAuthState(auth);
+  const [ refresh, setRefresh ]=useState(0);
   return (
     <div className="flex text-center h-screen">
-      <Router>
-        <Navbar user={user}/> 
-        <Routes>
-          <Route path='/' element={auth?<Home user={user}/>:<Login/>}/>
-          <Route path='/post' element={<Post user={user}/>}/>
-        </Routes>
-      </Router>
+      <appContext.Provider value={{refresh,setRefresh}}>
+        <Router>
+          <Navbar user={user}/> 
+          <Routes>
+            <Route path='/' element={auth?<Home user={user}/>:<Login/>}/>
+            <Route path='/post' element={<Post user={user}/>}/>
+          </Routes>
+        </Router>
+      </appContext.Provider>
     </div>
   );
 }

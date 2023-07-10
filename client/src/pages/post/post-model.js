@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useForm } from 'react-hook-form';
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -6,9 +6,11 @@ import { db, storage } from "../../config/firebase";
 import { ImageUploader } from "../../components/image-uploader";
 import { AlertDialogue } from "../../components/alert";
 import { useNavigate } from 'react-router-dom';
+import { appContext } from "../../App";
 
 
 export const PostModel= ({user})=>{
+    const { refresh, setRefresh }=useContext(appContext);
     const [ modeIsImage, setModeIsImage ]=useState(0);
     const [ titleText, setTitleText ]=useState("");
     const [ descriptionText, setDescriptionText ]=useState("");
@@ -23,6 +25,7 @@ export const PostModel= ({user})=>{
     useEffect(()=>{
         if(downloadURL&&image){
             uploadToFirestore();
+            setRefresh(!refresh);
         }
     },[downloadURL]);
     
@@ -38,6 +41,7 @@ export const PostModel= ({user})=>{
             }
             else{
                 uploadToFirestore();
+                setRefresh(!refresh);
             }
         }
         catch(error){
@@ -52,7 +56,6 @@ export const PostModel= ({user})=>{
                 titleText:titleText,
                 descriptionText:descriptionText,
                 image:downloadURL,
-                likes:0,
                 userName:user.displayName,
                 userId:user.uid,
                 time:Date.now(),
@@ -75,13 +78,19 @@ export const PostModel= ({user})=>{
 
     return( 
         <div className="flex justify-center pt-12 h-full w-full">
-            <div className="h-5/6 w-5/6 rounded-lg bg-gray-300 py-7">
+            <div className="h-5/6 w-5/6 rounded-lg bg-red-500 py-7">
                 <form className="h-full w-full">
                     <div className="flex justify-between pl-4">
-                        <input className="rounded flex-5 h-auto text-2xl font-bold py-2" value={titleText} onChange={(e)=>setTitleText(e.target.value)}></input>
+                        <input className="rounded flex-5 h-auto text-2xl font-bold py-2" maxLength={50} value={titleText} onChange={(e)=>setTitleText(e.target.value)}></input>
                         <div className="flex flex-1 justify-around">
-                            <input type="button" className="px-2 py-1 hover:cursor-pointer" onClick={()=>setModeIsImage(0)} value="Text"></input>
-                            <input type="button" className="px-2 py-1 hover:cursor-pointer" onClick={()=>setModeIsImage(1)} value="Image"></input>
+                            {/* <input type="button" className="px-2 py-1 hover:cursor-pointer" onClick={()=>setModeIsImage(0)} value="Text"></input>
+                            <input type="button" className="px-2 py-1 hover:cursor-pointer" onClick={()=>setModeIsImage(1)} value="Image"></input> */}
+                            <div className="px-2 py-1 hover:cursor-pointer h-12 w-16" onClick={()=>setModeIsImage(0)}>
+                                <img src="text-icon.png"/>
+                            </div>
+                            <div className="px-2 py-1 hover:cursor-pointer h-12 w-16" onClick={()=>setModeIsImage(1)}>
+                                <img src="image-icon.png"/>
+                            </div>
                         </div>
                     </div>
                     {modeIsImage
