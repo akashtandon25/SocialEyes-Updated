@@ -13,12 +13,7 @@ export const ImageUploader= ({setImage,setAlertStatus,setErrorStatus})=>{
         minSize: 50000,
         maxSize: 1024 * 1024 * 10,
         onDropAccepted: async (acceptedFiles) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-              const base64 = reader.result;
-              setImage(base64);
-            };
-            reader.readAsDataURL(acceptedFiles[0]);
+            setImage(acceptedFiles[0]);
         },
         onDropRejected: (fileRejections) => {
           const errors = fileRejections[fileRejections.length - 1].errors;

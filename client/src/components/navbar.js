@@ -15,7 +15,7 @@ export const Navbar= ({user})=>{
     }
     return (
         user
-        ?<div className="w-1/5 my-5 mx-10 h-auto bg-gray-200 rounded-md py-3">
+        ?<div className="w-1/5 my-5 mx-4 h-auto bg-gray-200 rounded-md py-3">
             <div className="h-3/4">
                 <p className="font-bold text-2xl text-left mx-5 my-3 underline">SocialEyes</p>
                 <div className="flex justify-center pt-6 pb-2"><img src={user.photoURL} className="rounded-full"/></div>

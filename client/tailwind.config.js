@@ -6,7 +6,10 @@ export const theme = {
   extend: {
     'flex':{
       '5': '5 5 0%',
-    }
+    },
+    'spacing':{
+      '3/10':'30%',
+    },
   },
 };
 export const plugins = [];
