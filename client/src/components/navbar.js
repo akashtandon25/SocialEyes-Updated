@@ -46,6 +46,7 @@ export const Navbar= ({user})=>{
 
     const signout= async ()=>{
         await signOut(auth);
+        navigate('/');
     }
     return (
         user
